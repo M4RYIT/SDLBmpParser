@@ -1,7 +1,7 @@
 #include <SDL.h>
 
-static const Sint32 alignment = 4;
-static const Sint32 channels = 3;
+static const Sint32 sdl_alignment = 4;
+static const Sint32 sdl_channels = 3;
 
 int bmp_to_static_texture(const char *file_name, SDL_Renderer *renderer, SDL_Texture **static_texture);
 

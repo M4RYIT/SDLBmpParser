@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "bmp_parser.h"
+#include "sdl_bmp_parser.h"
 
 int bmp_to_static_texture(const char *file_name, SDL_Renderer *renderer, SDL_Texture **static_texture)
 {
@@ -9,11 +9,11 @@ int bmp_to_static_texture(const char *file_name, SDL_Renderer *renderer, SDL_Tex
     Sint32 width, height;
     bmp_dim(content, &width, &height);
 
-    Sint32 row_size = width * channels;
+    Sint32 row_size = width * sdl_channels;
     Sint32 padded_row_size = calc_padded_row(row_size);
 
     Sint8 *head = start_point(content);
-    Sint8 *pixels = SDL_malloc(width*height*channels);
+    Sint8 *pixels = SDL_malloc(width*height*sdl_channels);
     if (!pixels)
     {
         SDL_Log("Pixels allocation failure : %s", SDL_GetError());
@@ -48,7 +48,7 @@ int bmp_to_streaming_texture(const char *file_name, SDL_Renderer *renderer, SDL_
     Sint32 width, height;
     bmp_dim(content, &width, &height);
 
-    Sint32 row_size = width * channels;
+    Sint32 row_size = width * sdl_channels;
     Sint32 padded_row_size = calc_padded_row(row_size);
 
     Sint8 *head = start_point(content);
@@ -95,8 +95,8 @@ void bmp_dim(const Sint8 *content, Sint32 *w, Sint32 *h)
 
 Sint32 calc_padded_row(const Sint32 row_size)
 {
-    Sint32 padded_row_size = (row_size / alignment) * alignment;
-    if (row_size % alignment) padded_row_size += alignment;
+    Sint32 padded_row_size = (row_size / sdl_alignment) * sdl_alignment;
+    if (row_size % sdl_alignment) padded_row_size += sdl_alignment;
     return padded_row_size;
 }
 
